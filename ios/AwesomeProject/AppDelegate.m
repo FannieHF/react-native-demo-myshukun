@@ -6,6 +6,11 @@
  */
 
 #import "AppDelegate.h"
+#import <RCTJPushModule.h>
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
+
 
 #import <React/RCTPushNotificationManager.h>
 #import <React/RCTBundleURLProvider.h>
@@ -15,6 +20,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [JPUSHService setupWithOption:launchOptions appKey:@"cc4e2f5c101354a9820016a1"
+                        channel:nil apsForProduction:nil];
+
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
