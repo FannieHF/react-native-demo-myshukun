@@ -1,110 +1,73 @@
-/**
- * Day 30
- * push notification
- */
-'use strict';
-
 import React,{ Component } from 'react';
-import { PushNotificationIOS, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight
+} from 'react-native';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper'
-import Util from './utils';
-
-
-class Button extends Component{
-  render() {
-    return (
-      <TouchableHighlight
-        underlayColor={'white'}
-        style={[styles.button,{backgroundColor:this.props.color}]}
-        onPress={this.props.onPress}>
-        <Text style={styles.buttonLabel}>
-          {this.props.label}
-        </Text>
-      </TouchableHighlight>
-    );
-  }
-}
+import Header from '../components/Header';
 
 @withMappedNavigationProps()
 class Notification extends Component{
-  componentWillMount() {
-    PushNotificationIOS.addEventListener('notification', this._onNotification);
-  }
+  constructor(props){
+		super(props);
+		this.state = {
+			showPopMenu: false
+		}
+	}
 
-  componentWillUnmount() {
-    PushNotificationIOS.removeEventListener('notification', this._onNotification);
-  }
-
-  _onNotification(notification) {
-
-    PushNotificationIOS.presentLocalNotification({
-      alertBody:notification.getMessage(),
-    });
-    let numOfBadge = PushNotificationIOS.getApplicationIconBadgeNumber((num) => {
-      let add = parseInt(notification.getBadgeCount(), 10);
-      PushNotificationIOS.setApplicationIconBadgeNumber(num+add);
-    });
-  
-  }
-
-  _sendNotification() {
-    require('RCTDeviceEventEmitter').emit('remoteNotificationReceived', {
-      aps: {
-        alert: 'This is the 30th day of this project',
-        badge: '1',
-        sound: 'default',
-      },
+	_toggleMenu() {
+    this.setState({
+      showPopMenu: !this.state.showPopMenu
     });
   }
 
-  render() {
-    PushNotificationIOS.requestPermissions();
-    return (
-      <View style={styles.container}>
-        <Button
-          color="#24bf2f"
-          onPress={() => this._sendNotification()}
-          label="Send local notification"
-        />
-        <Button
-          color="#F27405"
-          onPress={() => PushNotificationIOS.setApplicationIconBadgeNumber(5)}
-          label="Set app's icon badge to 5"
-        />
-        <Button
-          color="#15b3e5"
-          onPress={() => PushNotificationIOS.setApplicationIconBadgeNumber(0)}
-          label="Clear app's icon badge"
-        />
-      </View>
-    );
-  }
+
+	render() {
+		//PopMenu必须放在最后，否则会被<Main>的内容阻挡
+		return (
+    <View style={{flex: 1}}>
+			<Header toggleMenu={this._toggleMenu.bind(this)}/>
+      <Text style={styles.headerTitle}>微信(243)</Text>
+      <TouchableHighlight onPress={()=>{}} underlayColor='black' style={styles.headerIconButtonContainer}>
+        <Image style={styles.headerIconButton} source={require('../image/search.png')}/>
+      </TouchableHighlight>
+    </View>
+    )
+	}
 }
 
 var styles = StyleSheet.create({
-  container:{
-    paddingTop:80,
-    height: Util.size.height,
-    width: Util.size.width,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: "#fff"
-  },
-  button: {
-    padding: 10,
-    width: Util.size.width-80,
-    height:40,
-    borderRadius:5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:20,
-  },
-  buttonLabel: {
-    color: '#fff',
-  },
+	headerContainer: {
+		height: 50,
+		marginTop:100,
+		backgroundColor: 'rgb(26, 31, 33)',
+		flexDirection: 'row',
+		alignItems:'center',
+	},
+	headerTitle: {
+		fontSize: 18,
+		marginLeft: 15,
+		color: 'white'
+	},
+	headerTitleContainer: {
+		flex: 1
+	},
+	headerIconButtonContainer: {
+		alignItems:'center',
+		justifyContent: 'center',
+		marginLeft: 10,
+		marginRight: 10,
+		height: 50,
+		width:50
+	},
+	headerIconButton: {
+		width: 20,
+		height: 20,		
+		tintColor: 'white',
+	},
 });
 
 export default Notification;
-
-
-

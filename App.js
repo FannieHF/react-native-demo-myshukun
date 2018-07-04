@@ -1,39 +1,50 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import { withMappedNavigationProps } from 'react-navigation-props-mapper'
-import Detail from './view/detail'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  AppRegistry,
+} from 'react-native';
+import Header from './components/Header'
+import Main from './components/Main'
+import PopMenu from './components/PopMenu'
+import TabList from './components/TabList'
 
-@withMappedNavigationProps()
-class HomeScreen extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Single Page Calendar"
-          onPress={() => {
-            /* 1. Navigate to the Details route with params */
-            this.props.navigation.navigate('Details');
-          }}
-        />
-      </View>
+class App extends Component{
+  constructor(props){
+		super(props);
+		this.state = {
+			showPopMenu: false
+		}
+	}
+
+	_toggleMenu() {
+    this.setState({
+      showPopMenu: !this.state.showPopMenu
+    });
+  }
+
+
+	render() {
+		//PopMenu必须放在最后，否则会被<Main>的内容阻挡
+		return (
+      <View style={styles.container}>
+        <Header toggleMenu={this._toggleMenu.bind(this)} left={{'back': true, 'text': '目标'}} right={{'action':'more'}} />
+        <Main />
+        { this.state.showPopMenu?(<PopMenu />): null}
+			</View>
     );
-  }
+	}
 }
 
-export default class App extends Component {
-  render() {
-    return <RootStack />;
-  }
-}
+export default App;
 
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Details: Detail,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
-  {
-    initialRouteName: 'Home',
-  }
-);
+});
