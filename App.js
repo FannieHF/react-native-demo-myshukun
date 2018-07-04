@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  Image,
-  TouchableHighlight,
-  AppRegistry,
 } from 'react-native';
 import Header from './components/Header'
 import Main from './components/Main'

@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
 } from 'react-native';
-import Card from './Card';
+import TaskList from './TaskList';
 import TabList from './TabList';
+import Task from './Task';
 
 export default class Main extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      index: 0,
+      showPopMenu: false
+    };
+  }
+
+
+  _setActiveIndex(index) {
+    this.setState({index: index});
+  }
+  
+
 	render() {
 		return (
 			<View style={styles.container}>
-        <View style={styles.mainPart}>
-          <Card />
-        </View>
+        { this.state.index === 0 && <Task />}
+        { this.state.index === 1 && <Task />}
+        { this.state.index === 2 && <Task />}
 
-        <TabList/>
+        <TabList activeIndex={this.state.index} setActiveIndex={this._setActiveIndex.bind(this)}/>
       </View>
     )
 	}
@@ -30,5 +44,6 @@ const styles = StyleSheet.create({
   },
   mainPart : {
     flex: 1,
+    backgroundColor: '#EFEFF4',
   },
 });

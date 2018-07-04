@@ -1,36 +1,46 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
+import { 
+  StyleSheet, 
+  Text, 
+  View,
+  TouchableHighlight
+} from 'react-native';
 
 export default class Card extends Component {
+  ConsoleFunction=()=>{
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={[
-            {key: 'Devin'},
-            {key: 'Jackson'},
-            {key: 'James'},
-            {key: 'Joel'},
-            {key: 'John'},
-            {key: 'Jillian'},
-            {key: 'Jimmy'},
-            {key: 'Julie'},
-          ]}
-          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-        />
-      </View>
-    );
+    console.log(this.props.data)
+    return <TouchableHighlight underlayColor={'#eee'} style={styles.card} {...this.props.sortHandlers} onPress={this.ConsoleFunction}>
+      <View>
+          <Text style={styles.title}>{this.props.data.title}</Text>
+          <Text style={styles.duedate}>截止日期: {this.props.data.date}</Text>
+        </View>
+      </TouchableHighlight>
   }
 }
 
+
 const styles = StyleSheet.create({
-  container: {
-   flex: 1,
-   paddingTop: 22
+  card: {
+    backgroundColor: '#fff',
+    margin: 10,
+    paddingTop: 10,
+    shadowOffset:{  width: 2,  height: 2,  },
+    shadowColor: '#aaaaaa',
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    borderRadius: 5,
   },
-  item: {
+  title: {
     padding: 10,
-    fontSize: 18,
-    height: 44,
+    fontSize: 20,
+    color: '#999999',
+  },
+  duedate: {
+    padding: 10,
+    fontSize: 15,
+    color: '#686868',
   },
 })

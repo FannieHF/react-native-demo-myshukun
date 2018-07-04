@@ -473,6 +473,10 @@ acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0:
   version "5.7.1"
   resolved "http://103.211.47.132:4873/acorn/-/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
 
+add@^2.0.6:
+  version "2.0.6"
+  resolved "http://103.211.47.132:4873/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+
 ajv-keywords@^2.1.0:
   version "2.1.1"
   resolved "http://103.211.47.132:4873/ajv-keywords/-/ajv-keywords-2.1.1.tgz#617997fc5f60576894c435f940d819e135b80762"
@@ -1399,7 +1403,7 @@ babel-template@^6.16.0, babel-template@^6.24.1, babel-template@^6.26.0, babel-te
     babylon "^6.18.0"
     lodash "^4.17.4"
 
-babel-traverse@^6.18.0, babel-traverse@^6.24.1, babel-traverse@^6.26.0:
+babel-traverse@^6.0.0, babel-traverse@^6.18.0, babel-traverse@^6.24.1, babel-traverse@^6.26.0:
   version "6.26.0"
   resolved "http://103.211.47.132:4873/babel-traverse/-/babel-traverse-6.26.0.tgz#46a9cbd7edcc62c8e5c064e2d2d8d0f4035766ee"
   dependencies:
@@ -1413,7 +1417,7 @@ babel-traverse@^6.18.0, babel-traverse@^6.24.1, babel-traverse@^6.26.0:
     invariant "^2.2.2"
     lodash "^4.17.4"
 
-babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.24.1, babel-types@^6.26.0:
+babel-types@^6.0.0, babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.24.1, babel-types@^6.26.0:
   version "6.26.0"
   resolved "http://103.211.47.132:4873/babel-types/-/babel-types-6.26.0.tgz#a3b073f94ab49eb6fa55cd65227a334380632497"
   dependencies:
@@ -1635,10 +1639,6 @@ circular-json@^0.3.1:
   version "0.3.3"
   resolved "http://103.211.47.132:4873/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
 
-clamp@^1.0.1:
-  version "1.0.1"
-  resolved "http://103.211.47.132:4873/clamp/-/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
-
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "http://103.211.47.132:4873/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -1819,13 +1819,6 @@ create-react-class@^15.6.3:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
-
-create-react-context@^0.2.1:
-  version "0.2.2"
-  resolved "http://103.211.47.132:4873/create-react-context/-/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
-  dependencies:
-    fbjs "^0.8.0"
-    gud "^1.0.0"
 
 cross-spawn@^5.0.1, cross-spawn@^5.1.0:
   version "5.1.0"
@@ -2243,16 +2236,16 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-expect@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/expect/-/expect-23.2.0.tgz#53a7e135e36fe27e75867b1178ff08aaacc2b0dd"
+expect@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/expect/-/expect-23.3.0.tgz#ecb051adcbdc40ac4db576c16067f12fdb13cc61"
   dependencies:
     ansi-styles "^3.2.0"
     jest-diff "^23.2.0"
     jest-get-type "^22.1.0"
     jest-matcher-utils "^23.2.0"
-    jest-message-util "^23.2.0"
-    jest-regex-util "^23.0.0"
+    jest-message-util "^23.3.0"
+    jest-regex-util "^23.3.0"
 
 extend-shallow@^1.1.2:
   version "1.1.4"
@@ -2361,7 +2354,7 @@ fbjs-scripts@^0.8.1:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.0, fbjs@^0.8.14, fbjs@^0.8.16, fbjs@^0.8.9:
+fbjs@^0.8.14, fbjs@^0.8.16, fbjs@^0.8.9:
   version "0.8.17"
   resolved "http://103.211.47.132:4873/fbjs/-/fbjs-0.8.17.tgz#c4d598ead6949112653d6588b01a5cdcd9f90fdd"
   dependencies:
@@ -2626,10 +2619,6 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "http://103.211.47.132:4873/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
 
-gud@^1.0.0:
-  version "1.0.0"
-  resolved "http://103.211.47.132:4873/gud/-/gud-1.0.0.tgz#a489581b17e6a70beca9abe3ae57de7a499852c0"
-
 handlebars@^4.0.3:
   version "4.0.11"
   resolved "http://103.211.47.132:4873/handlebars/-/handlebars-4.0.11.tgz#630a35dfe0294bc281edae6ffc5d329fc7982dcc"
@@ -2701,10 +2690,6 @@ has@^1.0.1, has@^1.0.3:
   resolved "http://103.211.47.132:4873/has/-/has-1.0.3.tgz#722d7cbfc1f6aa8241f16dd814e011e1f41e8796"
   dependencies:
     function-bind "^1.1.1"
-
-hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.2.1, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
-  version "2.5.5"
-  resolved "http://103.211.47.132:4873/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -3039,10 +3024,6 @@ is-windows@^1.0.2:
   version "1.0.2"
   resolved "http://103.211.47.132:4873/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
 
-isarray@0.0.1:
-  version "0.0.1"
-  resolved "http://103.211.47.132:4873/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
-
 isarray@1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "http://103.211.47.132:4873/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
@@ -3146,9 +3127,9 @@ jest-changed-files@^23.2.0:
   dependencies:
     throat "^4.0.0"
 
-jest-cli@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-cli/-/jest-cli-23.2.0.tgz#3b543a3da5145dd8937931017282379fc696c45b"
+jest-cli@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-cli/-/jest-cli-23.3.0.tgz#307e9be7733443b789a8279d694054d051a9e5e2"
   dependencies:
     ansi-escapes "^3.0.0"
     chalk "^2.0.1"
@@ -3162,18 +3143,18 @@ jest-cli@^23.2.0:
     istanbul-lib-instrument "^1.10.1"
     istanbul-lib-source-maps "^1.2.4"
     jest-changed-files "^23.2.0"
-    jest-config "^23.2.0"
-    jest-environment-jsdom "^23.2.0"
+    jest-config "^23.3.0"
+    jest-environment-jsdom "^23.3.0"
     jest-get-type "^22.1.0"
     jest-haste-map "^23.2.0"
-    jest-message-util "^23.2.0"
-    jest-regex-util "^23.0.0"
-    jest-resolve-dependencies "^23.2.0"
-    jest-runner "^23.2.0"
-    jest-runtime "^23.2.0"
-    jest-snapshot "^23.2.0"
-    jest-util "^23.2.0"
-    jest-validate "^23.2.0"
+    jest-message-util "^23.3.0"
+    jest-regex-util "^23.3.0"
+    jest-resolve-dependencies "^23.3.0"
+    jest-runner "^23.3.0"
+    jest-runtime "^23.3.0"
+    jest-snapshot "^23.3.0"
+    jest-util "^23.3.0"
+    jest-validate "^23.3.0"
     jest-watcher "^23.2.0"
     jest-worker "^23.2.0"
     micromatch "^3.1.10"
@@ -3187,22 +3168,22 @@ jest-cli@^23.2.0:
     which "^1.2.12"
     yargs "^11.0.0"
 
-jest-config@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-config/-/jest-config-23.2.0.tgz#d2fb556fd5a2a19c39eb56d139dcca5dad2a1c88"
+jest-config@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-config/-/jest-config-23.3.0.tgz#bb4d53b70f9500fafddf718d226abb53b13b8323"
   dependencies:
     babel-core "^6.0.0"
     babel-jest "^23.2.0"
     chalk "^2.0.1"
     glob "^7.1.1"
-    jest-environment-jsdom "^23.2.0"
-    jest-environment-node "^23.2.0"
+    jest-environment-jsdom "^23.3.0"
+    jest-environment-node "^23.3.0"
     jest-get-type "^22.1.0"
-    jest-jasmine2 "^23.2.0"
-    jest-regex-util "^23.0.0"
+    jest-jasmine2 "^23.3.0"
+    jest-regex-util "^23.3.0"
     jest-resolve "^23.2.0"
-    jest-util "^23.2.0"
-    jest-validate "^23.2.0"
+    jest-util "^23.3.0"
+    jest-validate "^23.3.0"
     pretty-format "^23.2.0"
 
 jest-diff@^23.2.0:
@@ -3239,20 +3220,20 @@ jest-each@^23.2.0:
     chalk "^2.0.1"
     pretty-format "^23.2.0"
 
-jest-environment-jsdom@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-environment-jsdom/-/jest-environment-jsdom-23.2.0.tgz#3634603a08a975b0ca8a658320f56a54a8e04558"
+jest-environment-jsdom@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-environment-jsdom/-/jest-environment-jsdom-23.3.0.tgz#190457f91c9e615454c4186056065db6ed7a4e2a"
   dependencies:
     jest-mock "^23.2.0"
-    jest-util "^23.2.0"
+    jest-util "^23.3.0"
     jsdom "^11.5.1"
 
-jest-environment-node@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-environment-node/-/jest-environment-node-23.2.0.tgz#b6fe41372e382093bb6f3d9bdf6c1c4ec0a50f18"
+jest-environment-node@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-environment-node/-/jest-environment-node-23.3.0.tgz#1e8df21c847aa5d03b76573f0dc16fcde5034c32"
   dependencies:
     jest-mock "^23.2.0"
-    jest-util "^23.2.0"
+    jest-util "^23.3.0"
 
 jest-get-type@^22.1.0:
   version "22.4.3"
@@ -3282,20 +3263,20 @@ jest-haste-map@^23.2.0:
     micromatch "^3.1.10"
     sane "^2.0.0"
 
-jest-jasmine2@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-jasmine2/-/jest-jasmine2-23.2.0.tgz#aa670cdb1e4d5f8ec774c94dda5e105fe33d8bb4"
+jest-jasmine2@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-jasmine2/-/jest-jasmine2-23.3.0.tgz#a8706baac23c8a130d5aa8ef5464a9d49096d1b5"
   dependencies:
     chalk "^2.0.1"
     co "^4.6.0"
-    expect "^23.2.0"
+    expect "^23.3.0"
     is-generator-fn "^1.0.0"
     jest-diff "^23.2.0"
     jest-each "^23.2.0"
     jest-matcher-utils "^23.2.0"
-    jest-message-util "^23.2.0"
-    jest-snapshot "^23.2.0"
-    jest-util "^23.2.0"
+    jest-message-util "^23.3.0"
+    jest-snapshot "^23.3.0"
+    jest-util "^23.3.0"
     pretty-format "^23.2.0"
 
 jest-leak-detector@^23.2.0:
@@ -3312,9 +3293,9 @@ jest-matcher-utils@^23.2.0:
     jest-get-type "^22.1.0"
     pretty-format "^23.2.0"
 
-jest-message-util@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-message-util/-/jest-message-util-23.2.0.tgz#591e8148fff69cf89b0414809c721756ebefe744"
+jest-message-util@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-message-util/-/jest-message-util-23.3.0.tgz#bc07b11cec6971fb5dd9de2dfb60ebc22150c160"
   dependencies:
     "@babel/code-frame" "^7.0.0-beta.35"
     chalk "^2.0.1"
@@ -3330,16 +3311,16 @@ jest-react-native@^18.0.0:
   version "18.0.0"
   resolved "http://103.211.47.132:4873/jest-react-native/-/jest-react-native-18.0.0.tgz#77dd909f069324599f227c58c61c2e62168726ba"
 
-jest-regex-util@^23.0.0:
-  version "23.0.0"
-  resolved "http://103.211.47.132:4873/jest-regex-util/-/jest-regex-util-23.0.0.tgz#dd5c1fde0c46f4371314cf10f7a751a23f4e8f76"
+jest-regex-util@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-regex-util/-/jest-regex-util-23.3.0.tgz#5f86729547c2785c4002ceaa8f849fe8ca471bc5"
 
-jest-resolve-dependencies@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-resolve-dependencies/-/jest-resolve-dependencies-23.2.0.tgz#6df8d5709c6406639cd07f54bff074e01b5c0458"
+jest-resolve-dependencies@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-resolve-dependencies/-/jest-resolve-dependencies-23.3.0.tgz#8444d3b0b1288b80864d8801ff50b44a4d695d1d"
   dependencies:
-    jest-regex-util "^23.0.0"
-    jest-snapshot "^23.2.0"
+    jest-regex-util "^23.3.0"
+    jest-snapshot "^23.3.0"
 
 jest-resolve@^23.2.0:
   version "23.2.0"
@@ -3349,27 +3330,27 @@ jest-resolve@^23.2.0:
     chalk "^2.0.1"
     realpath-native "^1.0.0"
 
-jest-runner@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-runner/-/jest-runner-23.2.0.tgz#0d91967ea82f72b0c705910926086d2055ce75af"
+jest-runner@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-runner/-/jest-runner-23.3.0.tgz#04c7e458a617501a4875db0d7ffbe0e3cbd43bfb"
   dependencies:
     exit "^0.1.2"
     graceful-fs "^4.1.11"
-    jest-config "^23.2.0"
+    jest-config "^23.3.0"
     jest-docblock "^23.2.0"
     jest-haste-map "^23.2.0"
-    jest-jasmine2 "^23.2.0"
+    jest-jasmine2 "^23.3.0"
     jest-leak-detector "^23.2.0"
-    jest-message-util "^23.2.0"
-    jest-runtime "^23.2.0"
-    jest-util "^23.2.0"
+    jest-message-util "^23.3.0"
+    jest-runtime "^23.3.0"
+    jest-util "^23.3.0"
     jest-worker "^23.2.0"
     source-map-support "^0.5.6"
     throat "^4.0.0"
 
-jest-runtime@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-runtime/-/jest-runtime-23.2.0.tgz#62dcb01766a1c4c64696dc090209e76ce1aadcbc"
+jest-runtime@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-runtime/-/jest-runtime-23.3.0.tgz#4865aab4ceff82f9cec6335fd7ae1422cc1de7df"
   dependencies:
     babel-core "^6.0.0"
     babel-plugin-istanbul "^4.1.6"
@@ -3378,14 +3359,14 @@ jest-runtime@^23.2.0:
     exit "^0.1.2"
     fast-json-stable-stringify "^2.0.0"
     graceful-fs "^4.1.11"
-    jest-config "^23.2.0"
+    jest-config "^23.3.0"
     jest-haste-map "^23.2.0"
-    jest-message-util "^23.2.0"
-    jest-regex-util "^23.0.0"
+    jest-message-util "^23.3.0"
+    jest-regex-util "^23.3.0"
     jest-resolve "^23.2.0"
-    jest-snapshot "^23.2.0"
-    jest-util "^23.2.0"
-    jest-validate "^23.2.0"
+    jest-snapshot "^23.3.0"
+    jest-util "^23.3.0"
+    jest-validate "^23.3.0"
     micromatch "^3.1.10"
     realpath-native "^1.0.0"
     slash "^1.0.0"
@@ -3401,33 +3382,38 @@ jest-serializer@^23.0.1:
   version "23.0.1"
   resolved "http://103.211.47.132:4873/jest-serializer/-/jest-serializer-23.0.1.tgz#a3776aeb311e90fe83fab9e533e85102bd164165"
 
-jest-snapshot@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-snapshot/-/jest-snapshot-23.2.0.tgz#c7a3d017177bbad60c8a595869cf90a8782e6a7e"
+jest-snapshot@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-snapshot/-/jest-snapshot-23.3.0.tgz#fc4e9f81e45432d10507e27f50bce60f44d81424"
   dependencies:
+    babel-traverse "^6.0.0"
+    babel-types "^6.0.0"
     chalk "^2.0.1"
     jest-diff "^23.2.0"
     jest-matcher-utils "^23.2.0"
+    jest-message-util "^23.3.0"
+    jest-resolve "^23.2.0"
     mkdirp "^0.5.1"
     natural-compare "^1.4.0"
     pretty-format "^23.2.0"
+    semver "^5.5.0"
 
-jest-util@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-util/-/jest-util-23.2.0.tgz#62b770757696d96e094a04b8f1c373ca50a5ab2e"
+jest-util@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-util/-/jest-util-23.3.0.tgz#79f35bb0c30100ef611d963ee6b88f8ed873a81d"
   dependencies:
     callsites "^2.0.0"
     chalk "^2.0.1"
     graceful-fs "^4.1.11"
     is-ci "^1.0.10"
-    jest-message-util "^23.2.0"
+    jest-message-util "^23.3.0"
     mkdirp "^0.5.1"
     slash "^1.0.0"
     source-map "^0.6.0"
 
-jest-validate@^23.2.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest-validate/-/jest-validate-23.2.0.tgz#67c8b909e11af1701765238894c67ac3291b195e"
+jest-validate@^23.3.0:
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest-validate/-/jest-validate-23.3.0.tgz#d49bea6aad98c30acd2cbb542434798a0cc13f76"
   dependencies:
     chalk "^2.0.1"
     jest-get-type "^22.1.0"
@@ -3461,11 +3447,11 @@ jest-worker@^23.2.0:
     merge-stream "^1.0.1"
 
 jest@^23.1.0:
-  version "23.2.0"
-  resolved "http://103.211.47.132:4873/jest/-/jest-23.2.0.tgz#828bf31a096d45dcf06824d1ea03013af7bcfc20"
+  version "23.3.0"
+  resolved "http://103.211.47.132:4873/jest/-/jest-23.3.0.tgz#1355cd792f38cf20fba4da02dddb7ca14d9484b5"
   dependencies:
     import-local "^1.0.0"
-    jest-cli "^23.2.0"
+    jest-cli "^23.3.0"
 
 jpush-react-native@^2.2.5:
   version "2.2.5"
@@ -3688,13 +3674,13 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "http://103.211.47.132:4873/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
+lodash@4.x.x, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
+  version "4.17.10"
+  resolved "http://103.211.47.132:4873/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
+
 lodash@^3.5.0:
   version "3.10.1"
   resolved "http://103.211.47.132:4873/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
-  version "4.17.10"
-  resolved "http://103.211.47.132:4873/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -4006,6 +3992,10 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   resolved "http://103.211.47.132:4873/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.22.2:
+  version "2.22.2"
+  resolved "http://103.211.47.132:4873/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
 morgan@^1.9.0:
   version "1.9.0"
@@ -4369,12 +4359,6 @@ path-parse@^1.0.5:
   version "1.0.5"
   resolved "http://103.211.47.132:4873/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
 
-path-to-regexp@^1.7.0:
-  version "1.7.0"
-  resolved "http://103.211.47.132:4873/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
-  dependencies:
-    isarray "0.0.1"
-
 path-type@^1.0.0:
   version "1.1.0"
   resolved "http://103.211.47.132:4873/path-type/-/path-type-1.1.0.tgz#59c44f7ee491da704da415da5a4070ba4f8fe441"
@@ -4514,7 +4498,7 @@ prompts@^0.1.9:
     clorox "^1.0.3"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2:
   version "15.6.2"
   resolved "http://103.211.47.132:4873/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -4581,10 +4565,6 @@ react-is@^16.3.1:
   version "16.4.1"
   resolved "http://103.211.47.132:4873/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
-react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
-  version "3.0.4"
-  resolved "http://103.211.47.132:4873/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
-
 react-native-alphabetlistview@^0.3.0:
   version "0.3.0"
   resolved "http://103.211.47.132:4873/react-native-alphabetlistview/-/react-native-alphabetlistview-0.3.0.tgz#b7240b90ce1f6d26bf22a4cfa1ce4621334f49b3"
@@ -4592,45 +4572,11 @@ react-native-alphabetlistview@^0.3.0:
     merge "^1.2.0"
     prop-types "^15.6.0"
 
-react-native-dismiss-keyboard@1.0.0:
-  version "1.0.0"
-  resolved "http://103.211.47.132:4873/react-native-dismiss-keyboard/-/react-native-dismiss-keyboard-1.0.0.tgz#32886242b3f2317e121f3aeb9b0a585e2b879b49"
-
-react-native-drawer-layout-polyfill@^1.3.2:
-  version "1.3.2"
-  resolved "http://103.211.47.132:4873/react-native-drawer-layout-polyfill/-/react-native-drawer-layout-polyfill-1.3.2.tgz#192c84d7a5a6b8a6d2be2c7daa5e4164518d0cc7"
+react-native-navigation@^1.1.474:
+  version "1.1.474"
+  resolved "http://103.211.47.132:4873/react-native-navigation/-/react-native-navigation-1.1.474.tgz#e4ef4d152aa673453f9f39b7682253ad136ffbe3"
   dependencies:
-    react-native-drawer-layout "1.3.2"
-
-react-native-drawer-layout@1.3.2:
-  version "1.3.2"
-  resolved "http://103.211.47.132:4873/react-native-drawer-layout/-/react-native-drawer-layout-1.3.2.tgz#b9740d7663a1dc4f88a61b9c6d93d2d948ea426e"
-  dependencies:
-    react-native-dismiss-keyboard "1.0.0"
-
-react-native-safe-area-view@^0.7.0:
-  version "0.7.0"
-  resolved "http://103.211.47.132:4873/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
-
-react-native-safe-area-view@^0.8.0:
-  version "0.8.0"
-  resolved "http://103.211.47.132:4873/react-native-safe-area-view/-/react-native-safe-area-view-0.8.0.tgz#22d78cb8e8658d04a10cd53c1546e0bc86cb7aea"
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
-
-react-native-tab-view@^0.0.77:
-  version "0.0.77"
-  resolved "http://103.211.47.132:4873/react-native-tab-view/-/react-native-tab-view-0.0.77.tgz#11ceb8e7c23100d07e628dc151b57797524d00d4"
-  dependencies:
-    prop-types "^15.6.0"
-
-react-native-tab-view@^1.0.0:
-  version "1.0.2"
-  resolved "http://103.211.47.132:4873/react-native-tab-view/-/react-native-tab-view-1.0.2.tgz#66e0bc6d38a227ed2b212e3a256b7902f6ce02ed"
-  dependencies:
-    prop-types "^15.6.1"
+    lodash "4.x.x"
 
 react-native-vector-icons@^4.6.0:
   version "4.6.0"
@@ -4703,48 +4649,6 @@ react-native@~0.55.2:
     xcode "^0.9.1"
     xmldoc "^0.4.0"
     yargs "^9.0.0"
-
-react-navigation-deprecated-tab-navigator@1.3.0:
-  version "1.3.0"
-  resolved "http://103.211.47.132:4873/react-navigation-deprecated-tab-navigator/-/react-navigation-deprecated-tab-navigator-1.3.0.tgz#015dcae1e977b984ca7e99245261c15439026bb7"
-  dependencies:
-    react-native-tab-view "^0.0.77"
-
-react-navigation-drawer@0.4.3:
-  version "0.4.3"
-  resolved "http://103.211.47.132:4873/react-navigation-drawer/-/react-navigation-drawer-0.4.3.tgz#c04c94e2429b7e724801af05bd0a93a79cb27f71"
-  dependencies:
-    react-native-drawer-layout-polyfill "^1.3.2"
-
-react-navigation-props-mapper@^0.2.0:
-  version "0.2.0"
-  resolved "http://103.211.47.132:4873/react-navigation-props-mapper/-/react-navigation-props-mapper-0.2.0.tgz#894da9c433c226e8a4bacad87e5277f27838821d"
-  dependencies:
-    hoist-non-react-statics "^2.2.1"
-
-react-navigation-tabs@0.5.1:
-  version "0.5.1"
-  resolved "http://103.211.47.132:4873/react-navigation-tabs/-/react-navigation-tabs-0.5.1.tgz#ed33bce3a3e21b92646700de25bd94b8fc570371"
-  dependencies:
-    hoist-non-react-statics "^2.5.0"
-    prop-types "^15.6.1"
-    react-lifecycles-compat "^3.0.4"
-    react-native-safe-area-view "^0.7.0"
-    react-native-tab-view "^1.0.0"
-
-react-navigation@^2.3.1:
-  version "2.5.5"
-  resolved "http://103.211.47.132:4873/react-navigation/-/react-navigation-2.5.5.tgz#0c3b05147f824e636e6dd74a682e779e676d0cb0"
-  dependencies:
-    clamp "^1.0.1"
-    create-react-context "^0.2.1"
-    hoist-non-react-statics "^2.2.0"
-    path-to-regexp "^1.7.0"
-    react-lifecycles-compat "^3"
-    react-native-safe-area-view "^0.8.0"
-    react-navigation-deprecated-tab-navigator "1.3.0"
-    react-navigation-drawer "0.4.3"
-    react-navigation-tabs "0.5.1"
 
 react-proxy@^1.1.7:
   version "1.1.8"
@@ -5014,6 +4918,10 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "http://103.211.47.132:4873/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
+rn@^0.0.1:
+  version "0.0.1"
+  resolved "http://103.211.47.132:4873/rn/-/rn-0.0.1.tgz#2ff7005affaead1a328855b8f6a281988e58c202"
+
 rsvp@^3.3.3:
   version "3.6.2"
   resolved "http://103.211.47.132:4873/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
@@ -5085,7 +4993,7 @@ sax@~1.1.1:
   version "1.1.6"
   resolved "http://103.211.47.132:4873/sax/-/sax-1.1.6.tgz#5d616be8a5e607d54e114afae55b7eaf2fcc3240"
 
-"semver@2 || 3 || 4 || 5", semver@5.x, semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1:
+"semver@2 || 3 || 4 || 5", semver@5.x, semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.5.0"
   resolved "http://103.211.47.132:4873/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
