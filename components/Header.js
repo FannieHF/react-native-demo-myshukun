@@ -11,10 +11,12 @@ export default class Header extends Component {
 	constructor(props) {
 		super(props);
 	}
+
 	render() {
+
 		return (
 			<View style={styles.headerContainer}>
-				{ this.props.left.back && <TouchableHighlight onPress={()=>{}} underlayColor='black'>
+				{ this.props.left.back && <TouchableHighlight onPress={this.props.onBack} underlayColor='black'>
 					<View style={styles.BackButtonContainer}>
             <Image style={styles.IconButton} source={require('../image/arrow_back.png')}/>
             <Text style={styles.headerTitle}>{this.props.left.text}</Text>
@@ -22,7 +24,7 @@ export default class Header extends Component {
 				</TouchableHighlight>
         }
         <View style={styles.headerTitleContainer}>
-					<Text style={styles.headerTitle}>目标</Text>
+					<Text style={styles.headerTitle}>{this.props.title}</Text>
 				</View>
         { this.props.right.action === 'finish' && 
           <TouchableHighlight onPress={this.props.toggleMenu}  underlayColor='black' style={styles.moreIconButtonContainer}>

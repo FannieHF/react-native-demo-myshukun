@@ -7,17 +7,19 @@ import {
 } from 'react-native';
 
 export default class Card extends Component {
-  ConsoleFunction=()=>{
-  }
-
+  
   render() {
-    console.log(this.props.data)
-    return <TouchableHighlight underlayColor={'#eee'} style={styles.card} {...this.props.sortHandlers} onPress={this.ConsoleFunction}>
+    return (
+      <TouchableHighlight underlayColor={'#eee'} 
+        style={styles.card} {...this.props.sortHandlers} 
+        onPress={this.props.onClick}
+        >
       <View>
           <Text style={styles.title}>{this.props.data.title}</Text>
           <Text style={styles.duedate}>截止日期: {this.props.data.date}</Text>
         </View>
       </TouchableHighlight>
+    )
   }
 }
 
@@ -26,6 +28,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     margin: 10,
+    padding: 5,
     paddingTop: 10,
     shadowOffset:{  width: 2,  height: 2,  },
     shadowColor: '#aaaaaa',
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
   },
   title: {
     padding: 10,
-    fontSize: 20,
+    fontSize: 18,
     color: '#999999',
   },
   duedate: {

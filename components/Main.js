@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import TaskList from './TaskList';
 import TabList from './TabList';
 import Task from './Task';
 

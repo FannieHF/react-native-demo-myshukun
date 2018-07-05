@@ -1,5 +1,4 @@
 import React from 'react';
-import { withMappedNavigationProps } from 'react-navigation-props-mapper'
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import JPushModule from 'jpush-react-native';
 
@@ -8,7 +7,6 @@ const instructions = Platform.select({
   android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu'
 });
 
-@withMappedNavigationProps()
 export default class Detail extends React.Component {
 
   constructor(props) {
