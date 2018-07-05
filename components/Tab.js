@@ -13,17 +13,8 @@ export default class Tab extends Component {
 	render() {
 		var source;
 		switch(this.props.icon){
-			case "message":
-				source = require('../image/message.png');
-        break;
       case "task":
 				source = require('../image/toc.png');
-				break;
-			case "contacts":
-				source = require('../image/contacts.png');
-				break;
-			case "discovery":
-				source = require('../image/discovery.png');
 				break;
 			case "me":
 				source = require('../image/me.png');
