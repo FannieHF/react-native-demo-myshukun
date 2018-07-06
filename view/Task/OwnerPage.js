@@ -9,27 +9,45 @@ import {
 } from 'react-native';
 import Header from '../../Components/Header'
 import RadioButtons from '../../Components/RadioBtns'
+import config from '../../config'
 
 export default class OwnerPage extends Component {
   constructor(props){
 		super(props);
 		this.state = {
-      options:[
-        "小明",
-        "王太利",
-        "小坤",
-      ],
+      options: [],
       checkListOption: this.props.navigation.state.params.checkListOption,
 		}
   }
 
+  componentWillMount() {
+    return fetch(config.api.getOwners, {
+      headers: config.header, 
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.status === 0) {
+        this.setState({
+          options: responseJson.value,
+        });
+
+        console.log(responseJson.value)
+      } else {
+        console.error(responseJson);
+      }
+
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+  }
   navigateBack() {
     this.props.navigation.goBack();
   }
 
-  setSelectedOption(checkListOption){
+  setSelectedOption(checkListOption, index){
     this.setState({
-      checkListOption,
+      checkListOption: checkListOption.name,
     });
     this.props.navigation.state.params.changeOwner(checkListOption)
   }

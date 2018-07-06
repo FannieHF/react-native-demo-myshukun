@@ -6,12 +6,14 @@ import {
 import TaskDetail from './TaskDetail';
 import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
+import TaskNew from './TaskNew'
 import InputPage from './InputPage'
 import DimenPage from './DimenPage'
 import OwnerPage from './OwnerPage'
 import { createStackNavigator } from 'react-navigation';    
 
 export default class Task extends Component {
+  
   render() {
     let {width, height} = Dimensions.get('window');
     height = height - 60 // - header - tab
@@ -29,6 +31,7 @@ const RootStack = createStackNavigator(
     TaskList,
     TaskDetail,
     TaskEdit,
+    TaskNew,
     InputPage,
     DimenPage,
     OwnerPage,

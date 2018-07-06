@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View,
+  TouchableHighlight,
   Text,
   StyleSheet
 } from 'react-native';
@@ -24,9 +24,9 @@ var styles = StyleSheet.create({
 export default class PopMenuItem extends Component{
 	render() {
 		return (
-			<View style={styles.container}>
+			<TouchableHighlight underlayColor='#222222' style={styles.container} onPress={this.props.onPress} >
 				<Text style={styles.title}>{this.props.title}</Text>
-			</View>
+			</TouchableHighlight>
 			)
 	}
 }

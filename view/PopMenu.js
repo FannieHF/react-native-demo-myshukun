@@ -55,7 +55,7 @@ export default class PopMenu extends Component{
       ]
 		}
 		]}>
-			<PopMenuItem title="创建新目标" />
+			<PopMenuItem title="创建新目标" onPress={() => {this.props.toggle(), this.props.navigation.navigate("TaskNew")}}/>
 			<PopMenuItem title="历史目标" />
 		</Animated.View>);
 	}

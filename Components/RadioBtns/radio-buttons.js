@@ -43,7 +43,7 @@ class RadioButtons extends React.Component {
 
   selectOption(selectedOption, selectedIndex){
     this.setState({
-      selectedOption,
+      selectedOption: selectedOption.name,
       selectedIndex,
     });
     this.props.onSelection(selectedOption, selectedIndex);
@@ -53,10 +53,10 @@ class RadioButtons extends React.Component {
     const {selectedOption, selectedIndex} = this.state;
 
     const children = this.props.options.map(function(option, index){
-      const isSelected = selectedIndex === index || this.props.testOptionEqual(selectedOption, option);
+      const isSelected = selectedIndex === index || this.props.testOptionEqual(selectedOption, option.name);
       const onSelection = this.selectOption.bind(this, option, index);
 
-      return this.props.renderOption(option, isSelected, onSelection, index);
+      return this.props.renderOption(option.name, isSelected, onSelection, index);
     }.bind(this));
 
     return this.props.renderContainer(children);

@@ -29,21 +29,18 @@ export default class DimensionEdit extends Component {
   }
 
   // 维度一号位
-  changeOwner(name) {
+  changeOwner(owner) {
     this.setState({
       dimensionData: {
         ...this.state.dimensionData,
-        owner: {
-          ... this.state.dimensionData.owner,
-          name
-        },
+        owner,
       }
     })
   }
   editOwner() {
     this.props.navigation.navigate("OwnerPage", 
       {
-        checkListOption: this.state.dimensionData.owner.name, 
+        checkListOption: this.state.dimensionData.owner && this.state.dimensionData.owner.name, 
         changeOwner: this.changeOwner
       }
     )
@@ -76,7 +73,9 @@ export default class DimensionEdit extends Component {
   confirmText() {
     let keyFactor = []
     keyFactor = keyFactor.concat(this.state.dimensionData.keyFactor)
-    if (this.state.krIndex == this.state.dimensionData.keyFactor.length)
+    if (this.state.krIndex === 0 )
+      keyFactor = [{key: this.state.krIndex.toString(), content: this.state.text}]
+    else if (this.state.krIndex === this.state.dimensionData.keyFactor.length)
       keyFactor.push({key: this.state.krIndex.toString(), content: this.state.text})
     else {
       keyFactor[this.state.krIndex] = {
@@ -143,7 +142,9 @@ export default class DimensionEdit extends Component {
           <TouchableOpacity onPress={this.editOwner}>
             <View style={styles.formLine}>
               <Text style={styles.selectLabel}>维度一号位</Text>
-              <Text style={styles.selectNumber}>{this.state.dimensionData.owner.name}</Text>
+              <Text style={styles.selectNumber}>
+                {this.state.dimensionData.owner && this.state.dimensionData.owner.name}
+              </Text>
               <Image style={styles.selectIcon} source={require('../../image/arrow_forward.png')}/>
             </View>
           </TouchableOpacity>
@@ -180,8 +181,8 @@ export default class DimensionEdit extends Component {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => this.setModalVisible(true, null, this.state.dimensionData.keyFactor.length)}>
-            <Text style={styles.text} > 添加关键指标 </Text>
+          <TouchableOpacity onPress={() => this.setModalVisible(true, null, this.state.dimensionData.keyFactor && this.state.dimensionData.keyFactor.length || 0)}>
+            <Text style={styles.text} > + 添加关键指标 </Text>
           </TouchableOpacity>
         </View>
 
