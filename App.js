@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import Main from './components/Main'
+import Main from './view/Main'
 
 class App extends Component{
 	render() {

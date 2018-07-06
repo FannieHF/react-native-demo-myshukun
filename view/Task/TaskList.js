@@ -3,10 +3,10 @@ import {
   View,
 } from 'react-native';
 import moment from 'moment';
-import SortableListView from './SortableListView'
+import SortableListView from '../../Components/SortableListView'
 import Card from './Card'
-import Header from './Header'
-import PopMenu from './PopMenu'
+import Header from '../../Components/Header'
+import PopMenu from '../PopMenu'
 
 const data=[
   {title: '把心血管影像AI从先发优势切实地转化为有壁垒的市场竞争优势', date: moment(new Date()).format("YYYY年MM月DD日")},

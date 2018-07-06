@@ -4,67 +4,76 @@ import {
   View,
   Text,
   Image,
-  TouchableHighlight,
   ScrollView,
   TouchableOpacity,
   Dimensions,
   DatePickerIOS,
-  Modal
+  Modal,
+  Alert,
 } from 'react-native';
 import moment from 'moment'
-import Header from './Header'
+import Header from '../../Components/Header'
 import Dimension from './DimensionEdit'
 
 let { width, height} = Dimensions.get('window');
-const dialogH = 110;
 
 export default class TaskEdit extends Component {
   constructor(props){
 		super(props);
 		this.state = {
-      chosenDate: new Date(),
+      task: this.props.navigation.state.params.task,
       modalVisible: false,
-      dimensionData: {
-        title: '商务维度',
-        health: '健康',
-        keyFactor: [{
-          content: "市场占有率/份额，200家医院，19年上半年有心内科的医院50%覆盖，下半年70%覆盖",
-        }, {
-          content: "运营质量30%运营医院医生点击率100%，另70%运营医院医生点击率70%",
-        }, {
-          content: "劳动效率最高：a）销售1H/d提升到2H/d，b）角度时间2d减少到0.5d，c）运营人员5H/人提升至10H/人",
-        }]
-      }
     }
-    this.setDate = this.setDate.bind(this)
+    this.changeContent = this.changeContent.bind(this)
+    this.changeDimen = this.changeDimen.bind(this)
   }
   
+  // 目标描述
+  changeContent(content) {
+    this.setState({ task: { ...this.state.task, content } })
+  }
+  editContent() {
+    this.props.navigation.navigate("InputPage", 
+      {
+        content: this.state.task.content, 
+        changeContent: this.changeContent
+      }
+    )
+  }
+
+  // 选择维度
+  changeDimen(dimenNumber, dimensionData) {
+    this.setState({ task: { ...this.state.task, dimenNumber, dimensionData } })
+  }
+  editDimen() {
+    this.props.navigation.navigate("DimenPage", 
+      {
+        dimensions: this.state.task.dimensionData, 
+        changeDimen: this.changeDimen
+      }
+    )
+  }
+
   navigateBack() {
     this.props.navigation.goBack();
   }
-
+  // 日期模态框
   setDate(newDate) {
-    this.setState({chosenDate: newDate})
+    this.setState({ task: { ...this.state.task, chosenDate: newDate } })
   }
-
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-
   closeModal() {
-    this.setState({
-      modalVisible: false
-    });
+    this.setState({ modalVisible: false });
   }
-
-
   renderPicker() {
     return (
       <View style={styles.modalStyle}>
         <DatePickerIOS
           style={styles.datePicker}
-          date={this.state.chosenDate}
-          onDateChange={this.setDate}
+          date={this.state.task.chosenDate}
+          onDateChange={this.setDate.bind(this)}
           mode="date"
           locale="zh"
         />
@@ -72,17 +81,42 @@ export default class TaskEdit extends Component {
     )
   }
 
-  
+  // 删除目标
+  deleteTask() {
+    Alert.alert(
+      '要放弃\“商务维度\”的设置吗？',
+      '该操作将同时删除其关键指标设置。',
+      [
+        {text: '取消', style: 'cancel'},
+        {text: '确认', onPress: () => this.props.navigation.goBack()},
+      ],
+      { cancelable: false }
+    )
+  }
+
+  renderDimension(item) {
+    return (
+      <Dimension key={item.key} data={item} navigation={this.props.navigation} />
+    )
+  }
+
   render() {
+
+    const dimensions = this.state.task.dimensionData.map(function (item){
+      if (item.switch) {
+        return this.renderDimension(item);
+      }
+      return 
+    }.bind(this));
     
     height = height - 60 - 70 // - header - tab
-    const duedate = moment(this.state.chosenDate).format("YYYY年MM月DD日")
+    const duedate = moment(this.state.task.chosenDate).format("YYYY年MM月DD日")
     return (
       <View style={{ flex: 1 }}>
         <Header
           left={{ back: true, text: ''  }} 
           title='编辑目标' 
-          right={{'action':'finish'}}
+          right={{action:'plaintext', text: '完成'}}
           onBack = {this.navigateBack.bind(this)}  />
         
         <ScrollView style={{ flex: 1, height: height }}>
@@ -90,14 +124,14 @@ export default class TaskEdit extends Component {
             <View style={styles.formLine}>
               <Text style={styles.inputLabel}>目标描述</Text>
 
-              <TouchableHighlight style={{flex: 10}}>
+              <TouchableOpacity style={{flex: 10}} onPress={this.editContent.bind(this)}>
                 <View style={styles.contentWrapper}>
                   <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}>
-                    把心血管影像AI从先发优势切实地转化为有壁垒的市场竞争优势
+                    {this.state.task.content}
                   </Text>
-                  <Image style={styles.inputIcon} source={require('../image/arrow_forward.png')}/>
+                  <Image style={styles.inputIcon} source={require('../../image/arrow_forward.png')}/>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
 
             </View>
           </View>
@@ -106,16 +140,16 @@ export default class TaskEdit extends Component {
             <View style={styles.formLine}>
               <Text style={styles.inputLabel}>截止时间</Text>
 
-              <TouchableHighlight style={{flex: 10}} onPress={() => {
+              <TouchableOpacity style={{flex: 10}} onPress={() => {
                 this.setModalVisible(true);
               }}>
                 <View style={styles.contentWrapper}>
                   <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}>
                     {duedate}
                   </Text>
-                  <Image style={styles.inputIcon} source={require('../image/arrow_forward.png')}/>
+                  <Image style={styles.inputIcon} source={require('../../image/arrow_forward.png')}/>
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
 
             </View>
           </View>
@@ -123,21 +157,21 @@ export default class TaskEdit extends Component {
           <Text style={styles.text}>维度及其关键指标</Text>
 
           <View style={styles.panel}>
-            <TouchableHighlight>
+            <TouchableOpacity onPress={this.editDimen.bind(this)}>
               <View style={styles.formLine}>
                 <Text style={styles.selectLabel}>选择维度</Text>
-                <Text style={styles.selectNumber}>3</Text>
-                <Image style={styles.selectIcon} source={require('../image/arrow_forward.png')}/>
+                <Text style={styles.selectNumber}>{this.state.task.dimenNumber}</Text>
+                <Image style={styles.selectIcon} source={require('../../image/arrow_forward.png')}/>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
 
-          <Dimension data={this.state.dimensionData} />
+          {dimensions}
 
-            
           <TouchableOpacity
             style={styles.deleteBtn}
-            underlayColor='#fff'>
+            underlayColor='#fff'
+            onPress={this.deleteTask}>
             <Text style={styles.deleteText}>删除目标</Text>
           </TouchableOpacity>
 

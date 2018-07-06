@@ -6,6 +6,9 @@ import {
 import TaskDetail from './TaskDetail';
 import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
+import InputPage from './InputPage'
+import DimenPage from './DimenPage'
+import OwnerPage from './OwnerPage'
 import { createStackNavigator } from 'react-navigation';    
 
 export default class Task extends Component {
@@ -23,9 +26,12 @@ export default class Task extends Component {
 
 const RootStack = createStackNavigator(
   {
-    TaskList: TaskList,
-    TaskDetail: TaskDetail,
-    TaskEdit: TaskEdit,
+    TaskList,
+    TaskDetail,
+    TaskEdit,
+    InputPage,
+    DimenPage,
+    OwnerPage,
   },
   {
     initialRouteName: 'TaskList',

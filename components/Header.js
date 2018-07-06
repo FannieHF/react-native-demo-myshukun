@@ -26,15 +26,18 @@ export default class Header extends Component {
         <View style={styles.headerTitleContainer}>
 					<Text style={styles.headerTitle}>{this.props.title}</Text>
 				</View>
-        { this.props.right.action === 'finish' && 
+        { this.props.right.action === 'plaintext' && 
           <TouchableHighlight onPress={this.props.toggleMenu}  underlayColor='black' style={styles.moreIconButtonContainer}>
-            <Text style={styles.headerTitle}>完成</Text>
+            <Text style={styles.headerTitle}>{this.props.right.text}</Text>
           </TouchableHighlight>
         }
         { this.props.right.action === 'more' && 
           <TouchableHighlight onPress={this.props.toggleMenu}  underlayColor='black' style={styles.moreIconButtonContainer}>
             <Image style={styles.IconButton} source={require('../image/more.png')}/>
           </TouchableHighlight>
+				}
+				{ this.props.right.action === 'none' && 
+         	<View style={{flex: 1}} />
         }
 			</View>
 			)
@@ -52,7 +55,6 @@ var styles = StyleSheet.create({
 	},
 	headerTitle: {
 		fontSize: 18,
-		marginLeft: 15,
 		color: 'white'
 	},
 	BackButtonContainer: {

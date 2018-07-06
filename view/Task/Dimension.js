@@ -5,7 +5,7 @@ import {
   Text,
   Image,
   FlatList,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import CheckBox from 'react-native-check-box'
 
@@ -25,17 +25,14 @@ export default class Dimension extends Component {
   }
 
   render() {
-    const editDimension = () => {
-      this.props.navigation.navigate("TaskEdit", { data: this.props.data })
-    }
     return (
       <View style={styles.panel}>
 
         <View style={styles.panelHeader}>
-          <Text style={styles.panelHeaderText}>{this.props.data.title}</Text>
+          <Text style={styles.panelHeaderText}>{this.props.data.label}</Text>
 
           <View style={styles.avaterOwner}>
-            <Image style={styles.avater} source={require('../image/avater.png')}/>
+            <Image style={styles.avater} source={require('../../image/avater.png')}/>
             <Text style={styles.owner}>小坤</Text>
           </View>
 
@@ -43,12 +40,12 @@ export default class Dimension extends Component {
           
           <Text style={styles.panelHeaderText}></Text>
 
-          <TouchableHighlight style={styles.textWithArrow}  onPress={editDimension}>
+          <View style={styles.textWithArrow} >
             <View style={styles.textWithArrow} >
               <Text style={[styles.panelHeaderText, {flex: 4,  textAlign: 'right'}]}>执行详细</Text>
-              <Image style={[styles.iconForward, {flex: 1}]} source={require('../image/arrow_forward.png')}/>
+              <Image style={[styles.iconForward, {flex: 1}]} source={require('../../image/arrow_forward.png')}/>
             </View>
-          </TouchableHighlight>
+          </View>
 
         </View>
 
@@ -56,6 +53,7 @@ export default class Dimension extends Component {
         <View style={styles.checkBoxList}>
           <FlatList
             data={this.props.data.keyFactor}
+            keyExtractor={(item, index) => item.key}
             renderItem={({item}) =>
              <View style={styles.checkBoxWrapper} >
               <CheckBox
@@ -63,8 +61,8 @@ export default class Dimension extends Component {
               onClick={()=>this.onClick()}
               isChecked={item.checked}
               rightText={item.content}
-              checkedImage={<Image source={require('../image/cb_enabled.png')} style={styles.checkIcon}/>}
-              unCheckedImage={<Image source={require('../image/cb_disabled.png')} style={styles.checkIcon}/>}
+              checkedImage={<Image source={require('../../image/cb_enabled.png')} style={styles.checkIcon}/>}
+              unCheckedImage={<Image source={require('../../image/cb_disabled.png')} style={styles.checkIcon}/>}
               />
             </View>}
           />

@@ -4,7 +4,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import TabList from './TabList';
-import Task from './Task';
+import Task from './Task/Task';
 
 export default class Main extends Component {
   constructor(props){

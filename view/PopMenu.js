@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
   Animated,
   LayoutAnimation
@@ -30,23 +28,21 @@ export default class PopMenu extends Component{
 
 	componentDidMount() {
 		Animated.parallel([
-		Animated.timing(                          
-	      this.state.top,                 
-	      {
-	        toValue: 70,
-	        duration: 100                    
-	      }
-	    ),
-		Animated.timing(                          
-	      this.state.scale,                 
-	      {
-	        toValue: 1,
-	        duration: 100                    
-	      }
-	    )
-
-	    ]).start();    
-
+			Animated.timing(                          
+				this.state.top,                 
+				{
+					toValue: 70,
+					duration: 100                    
+				}
+			),
+			Animated.timing(                          
+				this.state.scale,                 
+				{
+					toValue: 1,
+					duration: 100                    
+				}
+			)
+		]).start();    
 
 	}
 
