@@ -10,8 +10,9 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
-import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view';
-
+import { SwipeListView } from 'react-native-swipe-list-view';
+import Util from '../../Common/util'
+import config from '../../Common/config'
 
 let { width} = Dimensions.get('window');
 
@@ -19,9 +20,13 @@ export default class DimensionEdit extends Component {
   constructor(props){
 		super(props);
 		this.state = {
-      dimensionData: this.props.data,
+      record: this.props.data,
+      dimensionData: this.props.data.goalDimensionality,
+      keyFactors: this.props.data.goalDimensionalityRecordKRs,
       modalVisible: false,
       marginBottom: 0,
+      recordId: this.props.data.id,
+      owner: this.props.data.owner,
     }
     this.editOwner = this.editOwner.bind(this)
     this.changeOwner = this.changeOwner.bind(this)
@@ -30,11 +35,9 @@ export default class DimensionEdit extends Component {
 
   // 维度一号位
   changeOwner(owner) {
-    this.setState({
-      dimensionData: {
-        ...this.state.dimensionData,
-        owner,
-      }
+    this.setState({ owner })
+    Util.update(`${config.api.gdrecords}/${this.state.recordId}`,{
+      owner
     })
   }
   editOwner() {
@@ -49,7 +52,6 @@ export default class DimensionEdit extends Component {
 
   // 添加关键指标
   setModalVisible(visible, text,  krIndex) {
-    console.log(krIndex)
     this.setState({modalVisible: visible, text, krIndex});
     if(visible) {
       this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow.bind(this));
@@ -71,25 +73,34 @@ export default class DimensionEdit extends Component {
   }
 
   confirmText() {
-    let keyFactor = []
-    keyFactor = keyFactor.concat(this.state.dimensionData.keyFactor)
-    if (this.state.krIndex === 0 )
-      keyFactor = [{key: this.state.krIndex.toString(), content: this.state.text}]
-    else if (this.state.krIndex === this.state.dimensionData.keyFactor.length)
-      keyFactor.push({key: this.state.krIndex.toString(), content: this.state.text})
-    else {
-      keyFactor[this.state.krIndex] = {
-        ...keyFactor[this.state.krIndex],
-        content: this.state.text
-      }
+    let keyFactors = []
+    keyFactors = keyFactors.concat(this.state.keyFactors)
+    var that = this
+    if ( this.state.krIndex === this.state.keyFactors.length) {
+      // create
+      Util.post(`${config.api.gdrecords}/${this.state.recordId}/gdrecordkrs`,{
+        description: this.state.text
+      }, function(data){
+        keyFactors.push(data)
+        that.setState({
+          keyFactors,
+          modalVisible: false
+        })
+      })
     }
-    this.setState({
-      dimensionData: {
-        ...this.state.dimensionData,
-        keyFactor,
-      },
-      modalVisible: false
-    })
+    else {
+      keyFactors[this.state.krIndex] = {
+        ...keyFactors[this.state.krIndex],
+        description: this.state.text
+      }
+      // update
+      Util.update(`${config.api.gdrecordkrs}/${keyFactors[this.state.krIndex].id}`, keyFactors[this.state.krIndex])
+      this.setState({
+        keyFactors,
+        modalVisible: false
+      })
+    }
+    
   }
 
   renderInput(){
@@ -112,24 +123,23 @@ export default class DimensionEdit extends Component {
   }
 
   closeRow(rowMap, rowKey) {
+    console.log(rowMap, rowKey)
 		if (rowMap[rowKey]) {
 			rowMap[rowKey].closeRow();
 		}
 	}
 
   editRow(index, item, rowMap) {
-    this.closeRow(rowMap, index)
-    this.setModalVisible(true, item.content, index)
+    this.closeRow(rowMap, item.id)
+    this.setModalVisible(true, item.description, index)
 	}
 
   deleteRow(index, rowMap) {
-		keyFactor = this.state.dimensionData.keyFactor;
-    keyFactor.splice(index, 1);
+    keyFactors = this.state.keyFactors;
+    Util.delete(`${config.api.gdrecordkrs}/${keyFactors[index].id}`)
+    keyFactors.splice(index, 1);
 		this.setState({
-      dimensionData: {
-        ...this.state.dimensionData,
-        keyFactor,
-      },
+      keyFactors
     })
   }
   
@@ -143,7 +153,7 @@ export default class DimensionEdit extends Component {
             <View style={styles.formLine}>
               <Text style={styles.selectLabel}>维度一号位</Text>
               <Text style={styles.selectNumber}>
-                {this.state.dimensionData.owner && this.state.dimensionData.owner.name}
+                {this.state.owner && this.state.owner.name}
               </Text>
               <Image style={styles.selectIcon} source={require('../../image/arrow_forward.png')}/>
             </View>
@@ -153,13 +163,13 @@ export default class DimensionEdit extends Component {
          <View style={styles.KAList}>
           <SwipeListView
             useFlatList
-            keyExtractor={(item) => item.key}
-            data={this.state.dimensionData.keyFactor}
+            keyExtractor={(item) => item.id}
+            data={this.state.keyFactors}
             renderItem={({item, index}) => {
               return (
                 <View style={styles.formLine} >
                   <View style={styles.krIcon}><Text style={{color: '#fff', textAlign: 'center', fontSize: 15}}>KR {index+1}</Text></View>
-                  <Text style={styles.krContent}>{item.content}</Text>
+                  <Text style={styles.krContent}>{item.description}</Text>
                 </View>
               )}
             }
@@ -181,7 +191,7 @@ export default class DimensionEdit extends Component {
         </View>
 
         <View>
-          <TouchableOpacity onPress={() => this.setModalVisible(true, null, this.state.dimensionData.keyFactor && this.state.dimensionData.keyFactor.length || 0)}>
+          <TouchableOpacity onPress={() => this.setModalVisible(true, null, this.state.keyFactors && this.state.keyFactors.length || 0)}>
             <Text style={styles.text} > + 添加关键指标 </Text>
           </TouchableOpacity>
         </View>
@@ -229,6 +239,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10,
     flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor: '#eeeeee',
   },
   KAList: {
     flexDirection: 'column',

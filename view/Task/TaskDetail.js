@@ -19,42 +19,60 @@ export default class TaskDetail extends Component {
 		super(props);
 		this.state = {
       dimensionData: [],
-		}
+      dimenNumber: 0,
+    }
   }
 
   componentWillMount() {
-    const url = config.api.getGoalDimens
+    this.refresh()
+  }
+
+  refresh() {
     const that = this
-    Util.get(url, function(data){
+    Util.post(config.api.searchgdrecords, [{
+      "attrName": "goal.id",
+      "operator": "EQ",
+      "attrValue": this.props.task.id,
+    }], function(data){
       that.setState({
-        dimensionData: data.value,
+        dimenNumber: data.length,
+        dimensionData: data,
       });
     }, function(err){
     });
+
+    Util.get(`${config.api.goals}/${this.props.task.id}`, function(data){
+      that.setState({
+        task: data
+      });
+    }, function(err){
+    });
+
   }
 
   navigateBack() {
+    this.props.onGoBack();
     this.props.navigation.goBack();
   }
 
   renderDimension(item) {
     return (
-      <Dimension key={item.key} data={item} navigation={this.props.navigation} />
+      <Dimension key={item.id} 
+        data={item.goalDimensionality} 
+        krs={item.goalDimensionalityRecordKRs} 
+        health = {item.score}
+        navigation={this.props.navigation} />
     )
   }
 
   render() {
-
-    const {task} = this.props;
-    const {dimensionData} = this.state;
+    const { task, dimensionData, dimenNumber } = this.state;
     let {width, height} = Dimensions.get('window');
+
     height = height - 60- 70 // - header - tab
 
     const dimensions =  dimensionData && dimensionData.length > 0 ? dimensionData.map(function (item){
-      if (item.switch) {
-        return this.renderDimension(item);
-      }
-      return 
+      return this.renderDimension(item);
     }.bind(this)) :undefined;
 
     return (
@@ -64,10 +82,12 @@ export default class TaskDetail extends Component {
           title='目标详情' 
           right={{action:'plaintext', text: '编辑'}}
           onBack = {this.navigateBack.bind(this)}
-          toggleMenu =  {() => this.props.navigation.navigate("TaskEdit", { task, dimensionData })} />
+          toggleMenu =  {() => this.props.navigation.navigate("TaskEdit", 
+            { task, dimensionData, dimenNumber, 
+              onGoBack: () => this.refresh() })} />
         
          <ScrollView style={{ flex: 1, width: width, height: height }}>
-          <Card data={task} />
+          { task && <Card data={task} />}
           { dimensionData && dimensionData.length > 0 &&  <Text style={styles.text}>维度及其关键指标</Text> }
 
           {dimensions}

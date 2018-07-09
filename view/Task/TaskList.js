@@ -26,7 +26,12 @@ export default class TaskList extends Component {
 		}
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    this.refresh()
+  }
+
+  refresh() {
+    console.log('refresh')
     const url = config.api.goals
     const that = this
     Util.get(url, function(data){
@@ -66,9 +71,9 @@ export default class TaskList extends Component {
           }}
           renderRow={row => <Card data={row}
           onClick={() => 
-            this.props.navigation.navigate('TaskDetail', { task: row })}/>}
+            this.props.navigation.navigate('TaskDetail', { onGoBack: () => this.refresh(), task: row })}/>}
         />
-        { this.state.showPopMenu?(<PopMenu navigation={this.props.navigation} toggle={this._toggleMenu.bind(this)}/>): null}
+        { this.state.showPopMenu?(<PopMenu navigation={this.props.navigation} toggle={this._toggleMenu.bind(this)} onGoBack={this.refresh} />): null}
       </View>
     );
   }

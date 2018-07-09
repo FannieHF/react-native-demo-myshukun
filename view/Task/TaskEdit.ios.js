@@ -26,9 +26,15 @@ export default class TaskEdit extends Component {
   constructor(props){
 		super(props);
 		this.state = {
-      task: this.props.task,
-      dimensionData: this.props.dimensionData,
+      task: this.props.task || {
+        description: null,
+        expectedEndDate: moment(new Date()).format("YYYY-MM-DD HH:mm"),
+        dimenNumber: 0,
+      },
+      dimensionData: this.props.dimensionData || [],
       modalVisible: false,
+      dimenNumber: this.props.dimenNumber || 0,
+      rightHeader: this.props.task ? {'action':'none'} : {'action':'plaintext', text: '完成'},
     }
     this.changeContent = this.changeContent.bind(this)
     this.changeDimen = this.changeDimen.bind(this)
@@ -50,34 +56,63 @@ export default class TaskEdit extends Component {
   }
 
   updateTask(object){
-    Util.update(`${config.api.goals}/${this.state.task.id}`, object)
+    if (this.state.task.id)
+      Util.update(`${config.api.goals}/${this.state.task.id}`, object)
   }
-  
+
+
+  newGoal(body) {
+    const url = config.api.goals
+    const that = this
+    Util.post(url, body, function(data){
+      that.setState({
+        task: data,
+        rightHeader: {action: 'none'},
+      });
+    }, function(err){
+    });
+  }
+
+  navigateBack() {
+    this.props.onGoBack();
+    this.props.navigation.goBack();
+  }
+
   // 选择维度
-  changeDimen(dimenNumber, dimensionData) {
-    this.setState({ task: { ...this.state.task, dimenNumber, dimensionData } })
+  changeDimen() {
+    const that = this
+    Util.post(config.api.searchgdrecords, [{
+      "attrName": "goal.id",
+      "operator": "EQ",
+      "attrValue": this.state.task.id,
+    }], function(data){
+      that.setState({
+        dimensionData: data,
+        dimenNumber: data.length
+      });
+    }, function(err){
+    });
   }
   editDimen() {
     this.props.navigation.navigate("DimenPage", 
-      {
-        dimensions: this.state.task.dimensionData, 
+      { 
+        goalId: this.state.task.id,
+        dimensionData: this.state.dimensionData, 
         changeDimen: this.changeDimen
       }
     )
   }
 
-  navigateBack() {
-    this.props.navigation.goBack();
-  }
   // 日期模态框
-  setDate(expectedEndDate) {
+  setDate(date) {
+    let expectedEndDate = moment(date).format("YYYY-MM-DD HH:mm")
     this.setState({ task: { ...this.state.task, expectedEndDate } })
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
   closeModal() {
-    this.updateTask({ expectedEndDate: moment(this.state.task.expectedEndDate).format("YYYY年MM月DD日") })
+    this.updateTask({ expectedEndDate: this.state.task.expectedEndDate })
     this.setState({ modalVisible: false });
   }
   renderPicker() {
@@ -87,29 +122,30 @@ export default class TaskEdit extends Component {
           style={styles.datePicker}
           date={new Date(this.state.task.expectedEndDate)}
           onDateChange={this.setDate.bind(this)}
-          mode="date"
+          mode="datetime"
           locale="zh"
         />
       </View>
     )
   }
-
+  
   // 删除目标
   deleteTask() {
+    var that = this
     Util.delete(`${config.api.goals}/${this.state.task.id}`, function(data){
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: 'TaskList' })],
+      });
+      that.props.navigation.dispatch(resetAction);
     }, function(err){
     });
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'TaskList' })],
-    });
-    this.props.navigation.dispatch(resetAction);
   }
   
   deleteConfirm(that) {
     Alert.alert(
-      '要放弃\“商务维度\”的设置吗？',
-      '该操作将同时删除其关键指标设置。',
+      '要删除改目标吗？',
+      '该操作将同时删除相关维度下的所有关键指标。',
       [
         {text: '取消', style: 'cancel'},
         {text: '确认', onPress: that.deleteTask.bind(that)},
@@ -120,27 +156,29 @@ export default class TaskEdit extends Component {
 
   renderDimension(item) {
     return (
-      <Dimension key={item.key} data={item} navigation={this.props.navigation} />
+      <Dimension key={item.id} 
+        data={item} 
+        navigation={this.props.navigation} />
     )
   }
 
   render() {
-    const dimensions = this.state.task.dimensionData && this.state.task.dimensionData.map(function (item){
-      if (item.switch) {
-        return this.renderDimension(item);
-      }
-      return 
+    const dimensions = this.state.dimensionData && this.state.dimensionData.map(function (item){
+      return this.renderDimension(item);
     }.bind(this));
     
     height = height - 60 - 70 // - header - tab
-    const duedate = moment(this.state.task.expectedEndDate).format("YYYY年MM月DD日")
     return (
       <View style={{ flex: 1 }}>
         <Header
           left={{ back: true, text: ''  }} 
           title='编辑目标' 
-          right={{action:'plaintext', text: '完成'}}
-          onBack = {this.navigateBack.bind(this)}  />
+          right={this.state.rightHeader}
+          onBack = {this.navigateBack.bind(this)} 
+          toggleMenu = {() => this.newGoal({
+            description: this.state.task.description,
+            expectedEndDate: this.state.task.expectedEndDate,
+          })} />
         
         <ScrollView style={{ flex: 1, height: height }}>
           <View style={styles.panel}>
@@ -168,7 +206,7 @@ export default class TaskEdit extends Component {
               }}>
                 <View style={styles.contentWrapper}>
                   <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}>
-                    {duedate}
+                  {this.state.task.expectedEndDate} 
                   </Text>
                   <Image style={styles.inputIcon} source={require('../../image/arrow_forward.png')}/>
                 </View>
@@ -177,26 +215,26 @@ export default class TaskEdit extends Component {
             </View>
           </View>
 
-          <Text style={styles.text}>维度及其关键指标</Text>
+          { this.state.task.id && <Text style={styles.text}>维度及其关键指标</Text> }
 
-          <View style={styles.panel}>
+          { this.state.task.id && <View style={styles.panel}>
             <TouchableOpacity onPress={this.editDimen.bind(this)}>
               <View style={styles.formLine}>
                 <Text style={styles.selectLabel}>选择维度</Text>
-                <Text style={styles.selectNumber}>{this.state.task.dimenNumber}</Text>
+                <Text style={styles.selectNumber}>{this.state.dimenNumber}</Text>
                 <Image style={styles.selectIcon} source={require('../../image/arrow_forward.png')}/>
               </View>
             </TouchableOpacity>
-          </View>
+            </View> }
 
           {dimensions}
 
-          <TouchableOpacity
+          { this.state.task.id &&  <TouchableOpacity
             style={styles.deleteBtn}
             underlayColor='#fff'
             onPress={()=>this.deleteConfirm(this)}>
             <Text style={styles.deleteText}>删除目标</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> }
 
         </ScrollView>
 

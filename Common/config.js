@@ -12,6 +12,8 @@ module.exports = {
     getDimens: `${url}${APIV1}/goaldimensionalities`,
     goals: `${url}${APIV1}/goals`,
     gdrecords: `${url}${APIV1}/gdrecords`,
-    getGoalDimens: `${url}${APIV1}/gdrecords`,
+    gdrecordkrs: `${url}${APIV1}/gdrecordkrs`,
+    searchgdrecords: `${url}${APIV1}/gdrecords/actions/search`,
+    deleterecordkrs: `${url}${APIV1}/gdrecords/actions/delete`,
   },
 }

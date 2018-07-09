@@ -29,14 +29,14 @@ export default class Dimension extends Component {
       <View style={styles.panel}>
 
         <View style={styles.panelHeader}>
-          <Text style={styles.panelHeaderText}>{this.props.data.label}</Text>
+          <Text style={styles.panelHeaderText}>{this.props.data.name}</Text>
 
           <View style={styles.avaterOwner}>
             <Image style={styles.avater} source={require('../../image/avater.png')}/>
             <Text style={styles.owner}>小坤</Text>
           </View>
 
-          <Text style={styles.panelHeaderText}>{this.props.data.health}</Text>
+          <Text style={styles.panelHeaderText}>{this.props.health}</Text>
           
           <Text style={styles.panelHeaderText}></Text>
 
@@ -52,15 +52,15 @@ export default class Dimension extends Component {
 
         <View style={styles.checkBoxList}>
           <FlatList
-            data={this.props.data.keyFactor}
-            keyExtractor={(item, index) => item.key}
+            data={this.props.krs}
+            keyExtractor={(item, index) => item.id}
             renderItem={({item}) =>
              <View style={styles.checkBoxWrapper} >
               <CheckBox
               style={{flex: 1, padding: 10}}
               onClick={()=>this.onClick()}
               isChecked={item.checked}
-              rightText={item.content}
+              rightText={item.description}
               checkedImage={<Image source={require('../../image/cb_enabled.png')} style={styles.checkIcon}/>}
               unCheckedImage={<Image source={require('../../image/cb_disabled.png')} style={styles.checkIcon}/>}
               />

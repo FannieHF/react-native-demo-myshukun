@@ -32,6 +32,7 @@ module.exports = {
     });
   },
   post: function(url, body, successCallback, failCallback){
+    console.log(url, body)
     fetch(url, {
       method: 'POST',
       headers: config.header, 
@@ -76,6 +77,28 @@ module.exports = {
     fetch(url, {
       method: 'DELETE',
       headers: config.header, 
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if (responseJson.status === 0) {
+        console.log(responseJson);
+        successCallback(responseJson.value);
+      } else {
+        console.error(responseJson.msg);
+        failCallback(responseJson);
+      }
+    })
+    .catch(function(err){
+      console.error(responseJson);
+      failCallback(err);
+    });
+  },
+  deleteWithBody: function(url, body, successCallback, failCallback){
+    console.log(url, body)
+    fetch(url, {
+      method: 'DELETE',
+      headers: config.header, 
+      body: JSON.stringify(body),
     })
     .then((response) => response.json())
     .then((responseJson) => {

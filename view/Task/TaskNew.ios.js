@@ -113,7 +113,7 @@ export default class TaskEdit extends Component {
       });
     }, function(err){
     });
-}
+  }
 
   render() {
     
