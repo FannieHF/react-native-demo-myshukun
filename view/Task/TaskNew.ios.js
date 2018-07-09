@@ -13,6 +13,8 @@ import {
 import moment from 'moment'
 import Header from '../../Components/Header'
 import Dimension from './DimensionEdit'
+import config from '../../Common/config'
+import Util from '../../Common/util'
 
 let { height} = Dimensions.get('window');
 
@@ -21,31 +23,26 @@ export default class TaskEdit extends Component {
 		super(props);
 		this.state = {
       task: {
-        content: null,
+        description: null,
         chosenDate: new Date(),
         dimenNumber: 0,
-        dimensionData: [{
-          key: 0,
-          label: '商务维度',
-        },
-        {
-          key: 1,
-          label: '市场维度',
-        }],
       },
+      id: undefined,
       modalVisible: false,
+      rightHeader: {'action':'plaintext', text: '完成'},
     }
     this.changeContent = this.changeContent.bind(this)
     this.changeDimen = this.changeDimen.bind(this)
   }
+
   // 目标描述
-  changeContent(content) {
-    this.setState({ task: { ...this.state.task, content } })
+  changeContent(description) {
+    this.setState({ task: { ...this.state.task, description } })
   }
   editContent() {
     this.props.navigation.navigate("InputPage", 
       {
-        content: this.state.task.content, 
+        description: this.state.task.description, 
         changeContent: this.changeContent
       }
     )
@@ -72,8 +69,6 @@ export default class TaskEdit extends Component {
   async renderPicker() {
     try {
       const {action, year, month, day} = await DatePickerAndroid.open({
-        // Use `new Date()` for current date.
-        // May 25 2020. Month 0 is January.
         date: this.state.chosenDate
       });
       if (action !== DatePickerAndroid.dismissedAction) {
@@ -108,24 +103,41 @@ export default class TaskEdit extends Component {
     )
   }
 
+  newGoal(body) {
+    const url = config.api.goals
+    const that = this
+    Util.post(url, body, function(data){
+      that.setState({
+        id: data.id,
+        rightHeader: {action: 'none'},
+      });
+    }, function(err){
+    });
+}
+
   render() {
     
-    const dimensions = this.state.task.dimensionData.map(function (item){
+    const dimensions = this.state.id && this.state.task.dimensionData ? this.state.task.dimensionData.map(function (item){
       if (item.switch) {
         return this.renderDimension(item);
       }
       return 
-    }.bind(this));
+    }.bind(this)) : undefined ;
     
     height = height - 60 - 70 // - header - tab
     const duedate = moment(this.state.task.chosenDate).format("YYYY年MM月DD日")
+
     return (
       <View style={{ flex: 1 }}>
         <Header
           left={{ back: true, text: ''  }} 
           title='编辑目标' 
-          right={{'action':'plaintext', text: '完成'}}
-          onBack = {this.navigateBack.bind(this)}  />
+          right={this.state.rightHeader}
+          onBack = {this.navigateBack.bind(this)} 
+          toggleMenu = {() => this.newGoal({
+            description: this.state.task.description,
+            expectedEndDate: moment(this.state.task.chosenDate).format("YYYY-MM-DD"),
+          })} />
         
         <ScrollView style={{ flex: 1, height: height }}>
           <View style={styles.panel}>
@@ -135,7 +147,7 @@ export default class TaskEdit extends Component {
               <TouchableOpacity style={{flex: 10}} onPress={this.editContent.bind(this)}>
                 <View style={styles.contentWrapper}>
                   <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}>
-                    {this.state.task.content}
+                    {this.state.task.description}
                   </Text>
                   <Image style={styles.inputIcon} source={require('../../image/arrow_forward.png')}/>
                 </View>
@@ -162,9 +174,9 @@ export default class TaskEdit extends Component {
             </View>
           </View>
 
-          <Text style={styles.text}>维度及其关键指标</Text>
+          { this.state.id &&  <Text style={styles.text}>维度及其关键指标</Text> }
 
-          <View style={styles.panel}>
+          { this.state.id &&  <View style={styles.panel}>
             <TouchableOpacity onPress={this.editDimen.bind(this)}>
               <View style={styles.formLine}>
                 <Text style={styles.selectLabel}>选择维度</Text>
@@ -172,16 +184,16 @@ export default class TaskEdit extends Component {
                 <Image style={styles.selectIcon} source={require('../../image/arrow_forward.png')}/>
               </View>
             </TouchableOpacity>
-          </View>
+            </View> }
 
           {dimensions}
             
-          <TouchableOpacity
+          { this.state.id && <TouchableOpacity
             style={styles.deleteBtn}
             underlayColor='#fff'
             onPress={this.deleteTask}>
             <Text style={styles.deleteText}>删除目标</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> }
 
         </ScrollView>
       </View>

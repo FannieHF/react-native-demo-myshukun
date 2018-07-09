@@ -14,33 +14,45 @@ import {
 import moment from 'moment'
 import Header from '../../Components/Header'
 import Dimension from './DimensionEdit'
+import Util from '../../Common/util'
+import config from '../../Common/config'
+import { StackActions, NavigationActions } from 'react-navigation';    
+import { withMappedNavigationProps } from 'react-navigation-props-mapper'
 
 let { width, height} = Dimensions.get('window');
 
+@withMappedNavigationProps()
 export default class TaskEdit extends Component {
   constructor(props){
 		super(props);
 		this.state = {
-      task: this.props.navigation.state.params.task,
+      task: this.props.task,
+      dimensionData: this.props.dimensionData,
       modalVisible: false,
     }
     this.changeContent = this.changeContent.bind(this)
     this.changeDimen = this.changeDimen.bind(this)
+    this.updateTask = this.updateTask.bind(this)
   }
   
   // 目标描述
-  changeContent(content) {
-    this.setState({ task: { ...this.state.task, content } })
+  changeContent(description) {
+    this.setState({ task: { ...this.state.task, description } })
   }
   editContent() {
     this.props.navigation.navigate("InputPage", 
       {
-        content: this.state.task.content, 
-        changeContent: this.changeContent
+        description: this.state.task.description, 
+        changeContent: this.changeContent,
+        updateContent: this.updateTask,
       }
     )
   }
 
+  updateTask(object){
+    Util.update(`${config.api.goals}/${this.state.task.id}`, object)
+  }
+  
   // 选择维度
   changeDimen(dimenNumber, dimensionData) {
     this.setState({ task: { ...this.state.task, dimenNumber, dimensionData } })
@@ -58,13 +70,14 @@ export default class TaskEdit extends Component {
     this.props.navigation.goBack();
   }
   // 日期模态框
-  setDate(newDate) {
-    this.setState({ task: { ...this.state.task, chosenDate: newDate } })
+  setDate(expectedEndDate) {
+    this.setState({ task: { ...this.state.task, expectedEndDate } })
   }
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
   closeModal() {
+    this.updateTask({ expectedEndDate: moment(this.state.task.expectedEndDate).format("YYYY年MM月DD日") })
     this.setState({ modalVisible: false });
   }
   renderPicker() {
@@ -72,7 +85,7 @@ export default class TaskEdit extends Component {
       <View style={styles.modalStyle}>
         <DatePickerIOS
           style={styles.datePicker}
-          date={this.state.task.chosenDate}
+          date={new Date(this.state.task.expectedEndDate)}
           onDateChange={this.setDate.bind(this)}
           mode="date"
           locale="zh"
@@ -83,12 +96,23 @@ export default class TaskEdit extends Component {
 
   // 删除目标
   deleteTask() {
+    Util.delete(`${config.api.goals}/${this.state.task.id}`, function(data){
+    }, function(err){
+    });
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'TaskList' })],
+    });
+    this.props.navigation.dispatch(resetAction);
+  }
+  
+  deleteConfirm(that) {
     Alert.alert(
       '要放弃\“商务维度\”的设置吗？',
       '该操作将同时删除其关键指标设置。',
       [
         {text: '取消', style: 'cancel'},
-        {text: '确认', onPress: () => this.props.navigation.goBack()},
+        {text: '确认', onPress: that.deleteTask.bind(that)},
       ],
       { cancelable: false }
     )
@@ -101,8 +125,7 @@ export default class TaskEdit extends Component {
   }
 
   render() {
-
-    const dimensions = this.state.task.dimensionData.map(function (item){
+    const dimensions = this.state.task.dimensionData && this.state.task.dimensionData.map(function (item){
       if (item.switch) {
         return this.renderDimension(item);
       }
@@ -110,7 +133,7 @@ export default class TaskEdit extends Component {
     }.bind(this));
     
     height = height - 60 - 70 // - header - tab
-    const duedate = moment(this.state.task.chosenDate).format("YYYY年MM月DD日")
+    const duedate = moment(this.state.task.expectedEndDate).format("YYYY年MM月DD日")
     return (
       <View style={{ flex: 1 }}>
         <Header
@@ -127,7 +150,7 @@ export default class TaskEdit extends Component {
               <TouchableOpacity style={{flex: 10}} onPress={this.editContent.bind(this)}>
                 <View style={styles.contentWrapper}>
                   <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}>
-                    {this.state.task.content}
+                    {this.state.task.description}
                   </Text>
                   <Image style={styles.inputIcon} source={require('../../image/arrow_forward.png')}/>
                 </View>
@@ -171,7 +194,7 @@ export default class TaskEdit extends Component {
           <TouchableOpacity
             style={styles.deleteBtn}
             underlayColor='#fff'
-            onPress={this.deleteTask}>
+            onPress={()=>this.deleteConfirm(this)}>
             <Text style={styles.deleteText}>删除目标</Text>
           </TouchableOpacity>
 

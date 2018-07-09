@@ -5,21 +5,24 @@ import {
   TextInput
 } from 'react-native';
 import Header from '../../Components/Header'
+import { withMappedNavigationProps } from 'react-navigation-props-mapper'
 
+@withMappedNavigationProps()
 export default class TaskDetail extends Component {
   constructor(props){
 		super(props);
 		this.state = {
-      text: this.props.navigation.state.params.content
+      text: this.props.description
 		}
   }
 
   navigateBack() {
     this.props.navigation.goBack();
+    this.props.updateContent({ description: this.state.text})
   }
   changeText(text) {
     this.setState({text})
-    this.props.navigation.state.params.changeContent(text)
+    this.props.changeContent(text)
   }
   render() {
 
@@ -35,7 +38,7 @@ export default class TaskDetail extends Component {
         <TextInput
           style={styles.input}
           multiline = {true}
-          numberOfLines = {4}
+          numberOfLines = {6}
           onChangeText={this.changeText.bind(this)}
           value={this.state.text}
         />
@@ -51,5 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: 15,
     padding: 15,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
 })

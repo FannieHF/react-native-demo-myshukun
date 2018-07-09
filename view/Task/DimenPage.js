@@ -7,6 +7,9 @@ import {
   Text,
 } from 'react-native';
 import Header from '../../Components/Header'
+import config from '../../Common/config'
+import Util from '../../Common/util'
+
 
 export default class DimenPage extends Component {
   constructor(props){
@@ -14,6 +17,20 @@ export default class DimenPage extends Component {
     this.state = {
       dimensions: this.props.navigation.state.params.dimensions
 		}
+  }
+
+  componentDidMount() {
+    if (! this.state.dimensions) {
+      const url = config.api.getDimens
+      const that = this
+      Util.get(url, function(data){
+        console.log(data)
+        that.setState({
+          dimensions: data,
+        });
+      }, function(err){
+      });
+    }
   }
 
   navigateBack() {
@@ -33,6 +50,7 @@ export default class DimenPage extends Component {
     item.switch = value
     let dimensions = this.state.dimensions
     dimensions[index] = item
+    console.log(dimensions)
     this.setState({ dimensions })
   }
 
@@ -40,7 +58,7 @@ export default class DimenPage extends Component {
     return (
       <View style={styles.panel}>
         <View style={styles.formLine}>
-          <Text style={styles.switchLabel}>{item.label}</Text>
+          <Text style={styles.switchLabel}>{item.name}</Text>
           <Switch
             onValueChange={(value) => this.switch(value, item, index)}
             value={item.switch}
@@ -51,21 +69,23 @@ export default class DimenPage extends Component {
   }
 
   render() {
-    const children = this.state.dimensions.map(function(item, index){
+    const children = this.state.dimensions ? this.state.dimensions.map(function(item, index){
       return this.renderOption(item, index);
-    }.bind(this));
+    }.bind(this)) : undefined ;
 
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <Header 
           left={{ back: true, text: '编辑目标'  }} 
           title='选择维度' 
           right={{'action':'none'}}
           onBack = {this.navigateBack.bind(this)}  />
 
-        {children}
+        <ScrollView>
+          {children}
+        </ScrollView>
         
-      </ScrollView>
+      </View>
 
     );
   }

@@ -14,9 +14,9 @@ export default class Card extends Component {
         style={styles.card} {...this.props.sortHandlers} 
         onPress={this.props.onClick}
         >
-      <View>
-          <Text style={styles.title}>{this.props.data.title}</Text>
-          <Text style={styles.duedate}>截止日期: {this.props.data.date}</Text>
+        <View>
+          <Text style={styles.title}>{this.props.data.description}</Text>
+          <Text style={styles.duedate}>截止日期: {this.props.data.expectedEndDate}</Text>
         </View>
       </TouchableHighlight>
     )

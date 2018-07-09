@@ -136,7 +136,7 @@ export default class DimensionEdit extends Component {
   render() {
     return (
       <View style={styles.panel}>
-        <Text style={styles.text}>{this.state.dimensionData.label}</Text>
+        <Text style={styles.text}>{this.state.dimensionData.name}</Text>
 
         <View style={styles.ownerPanel}>
           <TouchableOpacity onPress={this.editOwner}>

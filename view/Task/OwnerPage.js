@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 import Header from '../../Components/Header'
 import RadioButtons from '../../Components/RadioBtns'
-import config from '../../config'
+import config from '../../Common/config'
+import Util from '../../Common/util'
 
 export default class OwnerPage extends Component {
   constructor(props){
@@ -20,27 +21,20 @@ export default class OwnerPage extends Component {
 		}
   }
 
-  componentWillMount() {
-    return fetch(config.api.getOwners, {
-      headers: config.header, 
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (responseJson.status === 0) {
-        this.setState({
-          options: responseJson.value,
+  componentDidMount() {
+    if (! this.state.dimensions) {
+      const url = config.api.getOwners
+      const that = this
+      Util.get(url, function(data){
+        console.log(data)
+        that.setState({
+          options: data,
         });
-
-        console.log(responseJson.value)
-      } else {
-        console.error(responseJson);
-      }
-
-    })
-    .catch((error) =>{
-      console.error(error);
-    });
+      }, function(err){
+      });
+    }
   }
+
   navigateBack() {
     this.props.navigation.goBack();
   }
@@ -116,14 +110,14 @@ export default class OwnerPage extends Component {
 
     return (
 
-      <ScrollView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
         <Header 
           left={{ back: true, text: '编辑目标'  }} 
           title='维度一号位' 
           right={{'action':'none'}}
           onBack = {this.navigateBack.bind(this)}  />
 
-        <View style={styles.panel}>
+        <ScrollView style={styles.panel}>
           <RadioButtons
             options={ this.state.options }
             onSelection={ this.setSelectedOption.bind(this) }
@@ -132,8 +126,8 @@ export default class OwnerPage extends Component {
             renderContainer={ renderContainer }
           />
           {/* <Text>Selected accent: {this.state.checkListOption || 'none'}</Text> */}
-        </View>
-      </ScrollView>);
+        </ScrollView>
+      </View>);
   }
 };
 
@@ -146,9 +140,7 @@ var styles = StyleSheet.create({
   avaterOwner:{
     paddingTop: 10,
     paddingBottom: 10,
-    color: 'black',
     flex: 1,
-    fontSize: 18,
     flexDirection: 'row',
     alignItems: 'center',
   },
